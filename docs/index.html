@@ -1,1 +1,597 @@
-<h1>The Deniz Brief -  coming soon</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Deniz Brief</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07080E;
+      --surface: #0D1020;
+      --surface-hover: #111525;
+      --gold: #C8A84B;
+      --gold-muted: #7A6530;
+      --text-primary: #ECF0FA;
+      --text-secondary: #6B788F;
+      --text-muted: #3D4A5E;
+      --border: #161D2E;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HEADER */
+    header {
+      padding: 64px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(0.6); }
+    }
+
+    .week-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: right;
+      line-height: 1.4;
+    }
+
+    .week-date {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+      margin-top: 8px;
+    }
+
+    .tagline em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* CARDS */
+    .topic-card {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .card-header {
+      padding: 28px 0;
+      display: grid;
+      grid-template-columns: 44px 1fr 20px;
+      gap: 0 12px;
+      align-items: start;
+      transition: opacity 0.15s ease;
+    }
+
+    .topic-card:hover .card-header {
+      opacity: 0.85;
+    }
+
+    .card-number {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding-top: 5px;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(16px, 2.5vw, 19px);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+      transition: color 0.15s ease;
+    }
+
+    .card-one-liner {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .card-chevron {
+      color: var(--text-muted);
+      font-size: 20px;
+      padding-top: 1px;
+      transition: transform 0.25s ease, color 0.15s ease;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .topic-card.expanded .card-chevron {
+      transform: rotate(90deg);
+      color: var(--gold);
+    }
+
+    .topic-card.expanded .card-title {
+      color: var(--gold);
+    }
+
+    /* EXPANDED BODY */
+    .card-body {
+      display: none;
+      padding: 0 0 36px 56px;
+      animation: fadeSlide 0.2s ease;
+    }
+
+    .topic-card.expanded .card-body {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .section-text {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .conversation-line {
+      background: var(--surface);
+      border-left: 2px solid var(--gold);
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      font-style: italic;
+    }
+
+    /* CHAT */
+    .chat-messages {
+      margin-bottom: 12px;
+    }
+
+    .chat-bubble {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      line-height: 1.65;
+      margin-bottom: 8px;
+    }
+
+    .chat-bubble.user {
+      color: var(--text-secondary);
+      border-left: 2px solid var(--text-muted);
+      padding-left: 14px;
+    }
+
+    .chat-bubble.assistant {
+      color: var(--text-primary);
+      border-left: 2px solid var(--gold);
+      padding-left: 14px;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 11px 16px;
+      outline: none;
+      transition: border-color 0.15s ease;
+      border-radius: 1px;
+    }
+
+    .chat-input::placeholder { color: var(--text-muted); }
+    .chat-input:focus { border-color: var(--gold-muted); }
+
+    .chat-send {
+      background: var(--gold);
+      color: #07080E;
+      border: none;
+      padding: 11px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+      border-radius: 1px;
+    }
+
+    .chat-send:hover { opacity: 0.8; }
+
+    /* MEETING PREP */
+    .meeting-prep {
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      padding-bottom: 80px;
+    }
+
+    .section-eyebrow {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .meeting-prep h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3.5vw, 28px);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .meeting-prep p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    .meeting-input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .meeting-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 13px 18px;
+      outline: none;
+      transition: border-color 0.15s ease;
+      border-radius: 1px;
+    }
+
+    .meeting-input::placeholder { color: var(--text-muted); }
+    .meeting-input:focus { border-color: var(--gold-muted); }
+
+    .meeting-send {
+      background: var(--gold);
+      color: #07080E;
+      border: none;
+      padding: 13px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+      border-radius: 1px;
+      white-space: nowrap;
+    }
+
+    .meeting-send:hover { opacity: 0.8; }
+
+    .meeting-response {
+      display: none;
+      margin-top: 20px;
+      animation: fadeSlide 0.2s ease;
+    }
+
+    .meeting-response.visible { display: block; }
+
+    /* LOADING */
+    .loading {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .loading-text {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      animation: blink 1.6s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    /* MOBILE */
+    @media (max-width: 520px) {
+      header { padding: 40px 0 32px; }
+      .masthead { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .week-label { text-align: left; }
+      .card-body { padding-left: 0; }
+      .meeting-input-row { flex-direction: column; }
+      .meeting-send { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <div class="masthead">
+        <div class="brand">
+          The Deniz Brief
+          <span class="live-indicator"><span class="pulse-dot"></span></span>
+        </div>
+        <div class="week-label">
+          Weekly Intelligence
+          <span class="week-date" id="week-date">—</span>
+        </div>
+      </div>
+      <p class="tagline">AI through the lens of <em>Lyra</em> and your clients.</p>
+    </header>
+
+    <main>
+      <div id="topics">
+        <div class="loading"><p class="loading-text">Loading this week's briefing</p></div>
+      </div>
+
+      <section class="meeting-prep">
+        <span class="section-eyebrow">Meeting Prep</span>
+        <h2>Who are you meeting?</h2>
+        <p>Tell me who's in the room and I'll tell you exactly what to say about AI.</p>
+        <div class="meeting-input-row">
+          <input class="meeting-input" id="meeting-input" type="text"
+            placeholder="e.g. manufacturing CFO, Thursday board review" />
+          <button class="meeting-send" id="meeting-send">Prep Me</button>
+        </div>
+        <div class="meeting-response" id="meeting-response">
+          <div class="conversation-line" id="meeting-response-text"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p class="footer-text">Curated by Claude &mdash; Built for Deniz at Lyra Technology Group</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const WORKER_URL = 'YOUR_WORKER_URL_HERE'; // Replace in Phase 4
+
+    // ── LOAD BRIEFING ──────────────────────────────────────
+    async function loadBriefing() {
+      try {
+        const res = await fetch('briefing.json?t=' + Date.now());
+        const data = await res.json();
+        renderBriefing(data);
+      } catch (err) {
+        document.getElementById('topics').innerHTML =
+          '<div class="loading"><p class="loading-text">Unable to load briefing</p></div>';
+      }
+    }
+
+    // ── RENDER CARDS ───────────────────────────────────────
+    function renderBriefing(data) {
+      document.getElementById('week-date').textContent = data.week || '';
+      const container = document.getElementById('topics');
+      container.innerHTML = '';
+
+      data.topics.forEach((topic, i) => {
+        const card = document.createElement('div');
+        card.className = 'topic-card';
+
+        card.innerHTML = `
+          <div class="card-header">
+            <span class="card-number">0${i + 1}</span>
+            <div>
+              <h2 class="card-title">${topic.title}</h2>
+              <p class="card-one-liner">${topic.one_liner}</p>
+            </div>
+            <span class="card-chevron">›</span>
+          </div>
+          <div class="card-body">
+            <span class="section-label">What Happened</span>
+            <p class="section-text">${topic.deep_dive}</p>
+
+            <span class="section-label">Lyra Client Impact</span>
+            <p class="section-text">${topic.lyra_impact}</p>
+
+            <span class="section-label">Say This in Your Next Meeting</span>
+            <div class="conversation-line">${topic.conversation_line}</div>
+
+            <div class="chat-messages" id="messages-${topic.id}"></div>
+            <div class="chat-input-row">
+              <input class="chat-input" id="input-${topic.id}" type="text"
+                placeholder="Ask a follow-up question about this topic…" />
+              <button class="chat-send" data-id="${topic.id}">Ask</button>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+
+        // Expand / collapse
+        card.querySelector('.card-header').addEventListener('click', () => {
+          const open = card.classList.contains('expanded');
+          document.querySelectorAll('.topic-card.expanded').forEach(c => c.classList.remove('expanded'));
+          if (!open) card.classList.add('expanded');
+        });
+
+        // Chat
+        const sendBtn = card.querySelector('.chat-send');
+        const chatInput = card.querySelector('.chat-input');
+        sendBtn.addEventListener('click', () => sendChat(topic, data.topics));
+        chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(topic, data.topics); });
+      });
+    }
+
+    // ── CHAT ──────────────────────────────────────────────
+    async function sendChat(topic, allTopics) {
+      const input = document.getElementById(`input-${topic.id}`);
+      const messagesEl = document.getElementById(`messages-${topic.id}`);
+      const question = input.value.trim();
+      if (!question) return;
+
+      addBubble(messagesEl, question, 'user');
+      input.value = '';
+
+      if (WORKER_URL === 'YOUR_WORKER_URL_HERE') {
+        addBubble(messagesEl, 'Live chat arrives in the next update — check back soon.', 'assistant');
+        return;
+      }
+
+      const thinking = addBubble(messagesEl, '…', 'assistant');
+      try {
+        const res = await fetch(`${WORKER_URL}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question, topic })
+        });
+        const data = await res.json();
+        thinking.textContent = data.answer;
+      } catch {
+        thinking.textContent = 'Something went wrong. Try again.';
+      }
+    }
+
+    function addBubble(container, text, role) {
+      const el = document.createElement('div');
+      el.className = `chat-bubble ${role}`;
+      el.textContent = text;
+      container.appendChild(el);
+      container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return el;
+    }
+
+    // ── MEETING PREP ──────────────────────────────────────
+    async function sendMeetingPrep() {
+      const input = document.getElementById('meeting-input');
+      const responseEl = document.getElementById('meeting-response');
+      const responseText = document.getElementById('meeting-response-text');
+      const who = input.value.trim();
+      if (!who) return;
+
+      if (WORKER_URL === 'YOUR_WORKER_URL_HERE') {
+        responseText.textContent = 'Meeting prep arrives in the next update — check back soon.';
+        responseEl.classList.add('visible');
+        return;
+      }
+
+      responseText.textContent = 'Preparing your briefing…';
+      responseEl.classList.add('visible');
+
+      try {
+        const briefing = await (await fetch('briefing.json')).json();
+        const res = await fetch(`${WORKER_URL}/meeting-prep`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ who, topics: briefing.topics })
+        });
+        const data = await res.json();
+        responseText.textContent = data.prep;
+      } catch {
+        responseText.textContent = 'Something went wrong. Try again.';
+      }
+    }
+
+    document.getElementById('meeting-send').addEventListener('click', sendMeetingPrep);
+    document.getElementById('meeting-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') sendMeetingPrep();
+    });
+
+    // ── INIT ──────────────────────────────────────────────
+    loadBriefing();
+  </script>
+</body>
+</html>
