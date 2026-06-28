@@ -5,6 +5,9 @@ on:
     - cron: '0 8 * * 1'  # Every Monday at 8 AM UTC
   workflow_dispatch:       # Also allows manual trigger from GitHub UI
 
+permissions:
+  contents: write          # Allows the bot to commit and push back to the repo
+
 jobs:
   generate:
     runs-on: ubuntu-latest
