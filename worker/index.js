@@ -54,7 +54,7 @@ Your job:
 2. For each relevant topic, give Deniz one thing to say — a specific, confident sentence she can use verbatim
 3. End with one sentence on the overall AI narrative she should project in this meeting
 
-Keep the total response under 200 words. Format it cleanly — no bullet symbols, just clear labeled sections.`;
+Keep the total response under 200 words. Use plain text only — no asterisks, no markdown, no bullet points. Use line breaks to separate sections. Label each section in ALL CAPS.`;
 
       const prep = await callClaude(prompt, env.ANTHROPIC_API_KEY);
       return corsResponse(JSON.stringify({ prep }), 200);
