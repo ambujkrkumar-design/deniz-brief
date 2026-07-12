@@ -16,7 +16,7 @@ export default {
     // ── /chat endpoint ─────────────────────────────────────
     if (url.pathname === '/chat' && request.method === 'POST') {
       const { question, topic } = await request.json();
-
+      await logPrompt(env, 'chat', { question, topicTitle: topic.title });
       const prompt = `${LYRA_CONTEXT}
 
 The user is reading a briefing topic titled: "${topic.title}"
@@ -37,7 +37,7 @@ Answer in 3-5 sentences. Be specific and practical. Focus on what it means for m
     // ── /meeting-prep endpoint ─────────────────────────────
     if (url.pathname === '/meeting-prep' && request.method === 'POST') {
       const { who, topics } = await request.json();
-
+      await logPrompt(env, 'meeting-prep', { who });
       const topicSummaries = topics.map(t =>
         `- ${t.title}: ${t.one_liner}`
       ).join('\n');
@@ -65,6 +65,21 @@ Keep the total response under 200 words. Use plain text only — no asterisks, n
 };
 
 // ── Call Claude API ────────────────────────────────────────
+// ── Log prompt to KV ──────────────────────────────────────
+async function logPrompt(env, type, content) {
+  try {
+    const key = `${type}:${Date.now()}`;
+    const entry = JSON.stringify({
+      type,
+      content,
+      timestamp: new Date().toISOString()
+    });
+    await env.PROMPT_LOGS.put(key, entry);
+  } catch (err) {
+    // Logging failure should never break the main response
+    console.error('Log error:', err);
+  }
+}
 async function callClaude(prompt, apiKey) {
   const response = await fetch(ANTHROPIC_API_URL, {
     method: 'POST',
