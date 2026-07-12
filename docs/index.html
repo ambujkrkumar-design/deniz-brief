@@ -447,7 +447,7 @@
   </div>
 
   <script>
-    const WORKER_URL = 'YOUR_WORKER_URL_HERE'; // Replace in Phase 4
+    const WORKER_URL = 'https://deniz-brief-worker.ambujdesign.workers.dev'; // Replace in Phase 4
 
     // ── LOAD BRIEFING ──────────────────────────────────────
     async function loadBriefing() {
@@ -526,11 +526,6 @@
       addBubble(messagesEl, question, 'user');
       input.value = '';
 
-      if (WORKER_URL === 'YOUR_WORKER_URL_HERE') {
-        addBubble(messagesEl, 'Live chat arrives in the next update — check back soon.', 'assistant');
-        return;
-      }
-
       const thinking = addBubble(messagesEl, '…', 'assistant');
       try {
         const res = await fetch(`${WORKER_URL}/chat`, {
@@ -561,12 +556,6 @@
       const responseText = document.getElementById('meeting-response-text');
       const who = input.value.trim();
       if (!who) return;
-
-      if (WORKER_URL === 'YOUR_WORKER_URL_HERE') {
-        responseText.textContent = 'Meeting prep arrives in the next update — check back soon.';
-        responseEl.classList.add('visible');
-        return;
-      }
 
       responseText.textContent = 'Preparing your briefing…';
       responseEl.classList.add('visible');
